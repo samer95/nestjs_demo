@@ -1,19 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import bodyParser from 'body-parser';
-import helmet from 'helmet';
+import * as bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
 import { TimeoutInterceptor } from './interceptors';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { useContainer } from 'class-validator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
 
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-  app.use(helmet());
   app.use(rateLimit({ windowMs: 60, max: 50 }));
 
   app.useGlobalInterceptors(new TimeoutInterceptor());
