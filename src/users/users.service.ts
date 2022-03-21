@@ -29,6 +29,10 @@ export class UsersService {
     return this.userRepository.findOneOrFail(id);
   }
 
+  findByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({ email });
+  }
+
   update(id: number, updateUserInput: UpdateUserInput) {
     const updatedData = plainToInstance(UpdateUserInput, updateUserInput, { excludeExtraneousValues: true });
 

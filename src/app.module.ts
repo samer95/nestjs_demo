@@ -7,6 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
 import { Exists } from './validators/isExists';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { Exists } from './validators/isExists';
       useFactory: async (configService: ConfigService) => ({ ...configService.get('db') }),
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [Exists],
