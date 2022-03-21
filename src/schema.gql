@@ -1,0 +1,66 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  first_name: String!
+  last_name: String!
+  email: String!
+  phone: String!
+  password: String!
+  email_verified_at: DateTime
+  phone_verified_at: DateTime
+  user_type: String!
+  gender: String
+  birthdate: DateTime
+  max_facilities_count: Int!
+  lang: String!
+  about: String
+  address: String
+  image: String
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+}
+
+input CreateUserInput {
+  first_name: String!
+  last_name: String!
+  email: String!
+  phone: String
+  password: String!
+  password_confirmation: String!
+}
+
+input UpdateUserInput {
+  first_name: String!
+  last_name: String!
+  email: String!
+  phone: String
+  password: String
+  password_confirmation: String
+  id: Float!
+  user_type: String
+  gender: String
+  birthdate: String
+  max_facilities_count: Float
+  lang: String
+  about: String
+  address: String
+}
