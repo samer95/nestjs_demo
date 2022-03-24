@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   IsEmail,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
@@ -12,11 +13,19 @@ import {
 } from 'class-validator';
 import { IsEqualToProp } from '../../validators/isEqualToProp';
 import { Expose } from 'class-transformer';
-import { Exists } from '../../validators/isExists';
+import { ExistingTypes, Exists } from '../../validators/isExists';
 import { User } from '../entities/user.entity';
+import { Certificate } from '../../certificates/entities/certificate.entity';
 
 @InputType()
 export class CreateUserInput {
+  @Field({ nullable: true })
+  @IsInt()
+  @Validate(Exists, [Certificate, ({ object: { id } }) => ({ id }), ExistingTypes.ShouldBeExisted], {
+    message: ({ property }: ValidationArguments) => 'Certificate is not exist',
+  })
+  certificate_id: number;
+
   @Field()
   @Expose()
   @IsString()

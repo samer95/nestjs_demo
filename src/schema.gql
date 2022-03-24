@@ -2,8 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Certificate {
+  id: Int!
+  name: String!
+  code: String
+  description: String
+  created_at: DateTime!
+  updated_at: DateTime!
+  users: [User!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type User {
   id: Int!
+  certificate_id: Int
   first_name: String!
   last_name: String!
   email: String!
@@ -21,12 +37,8 @@ type User {
   image: String
   created_at: DateTime!
   updated_at: DateTime!
+  certificate: Certificate
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type LoginResponse {
   access_token: String!
@@ -36,17 +48,23 @@ type LoginResponse {
 type Query {
   users: [User!]!
   user(id: Int!): User!
+  certificates: [Certificate!]!
+  certificate(id: Int!): Certificate!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createCertificate(createCertificateInput: CreateCertificateInput!): Certificate!
+  updateCertificate(updateCertificateInput: UpdateCertificateInput!): Certificate!
+  removeCertificate(id: Int!): Certificate!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   register(registerUserInput: CreateUserInput!): User!
 }
 
 input CreateUserInput {
+  certificate_id: Float
   first_name: String!
   last_name: String!
   email: String!
@@ -56,6 +74,7 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
+  certificate_id: Float
   first_name: String!
   last_name: String!
   email: String!
@@ -70,6 +89,19 @@ input UpdateUserInput {
   lang: String
   about: String
   address: String
+}
+
+input CreateCertificateInput {
+  name: String!
+  code: String!
+  description: String!
+}
+
+input UpdateCertificateInput {
+  name: String!
+  code: String!
+  description: String!
+  id: Float!
 }
 
 input LoginUserInput {

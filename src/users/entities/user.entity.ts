@@ -1,8 +1,17 @@
 import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { UserTypes } from '../../enums/UserTypes';
 import { Genders } from '../../enums/Genders';
 import { Languages } from '../../enums/Languages';
+import { Certificate } from '../../certificates/entities/certificate.entity';
 
 @Entity({ name: 'users' })
 @ObjectType()
@@ -10,6 +19,10 @@ export class User {
   @PrimaryGeneratedColumn()
   @Field((type) => Int)
   id: number;
+
+  @Column({ nullable: true })
+  @Field((type) => Int, { nullable: true })
+  certificate_id: number;
 
   @Column()
   @Field()
@@ -82,4 +95,12 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp' })
   @Field((type) => GraphQLISODateTime)
   updated_at: Date;
+
+  @ManyToOne((type) => Certificate, (certificate) => certificate.users, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @Field((type) => Certificate, { nullable: true })
+  @JoinColumn({ name: 'certificate_id' })
+  certificate: Certificate[];
 }

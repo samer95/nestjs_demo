@@ -7,10 +7,16 @@ import { UpdateUserInput } from './dto/update-user.input';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { plainToInstance } from 'class-transformer';
+import { Certificate } from '../certificates/entities/certificate.entity';
+import { CertificatesService } from '../certificates/certificates.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private userRepository: Repository<User>, private configService: ConfigService) {}
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+    private configService: ConfigService,
+    private certificateService: CertificatesService,
+  ) {}
 
   @UsePipes(new ValidationPipe({ transform: true }))
   async create(createUserInput: CreateUserInput): Promise<User> {
@@ -29,8 +35,17 @@ export class UsersService {
     return this.userRepository.findOneOrFail(id);
   }
 
+  getCertificate(id: number): Promise<Certificate> {
+    console.log('getCertificate', id);
+    return this.certificateService.findOne(id, false);
+  }
+
   findByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ email });
+  }
+
+  findByOptions(options = {}): Promise<User[]> {
+    return this.userRepository.find(options);
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {

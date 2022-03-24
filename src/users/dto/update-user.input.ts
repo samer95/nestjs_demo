@@ -19,6 +19,7 @@ import { UserTypes } from '../../enums/UserTypes';
 import { Genders } from '../../enums/Genders';
 import { Languages } from '../../enums/Languages';
 import { Not } from 'typeorm';
+import { Certificate } from '../../certificates/entities/certificate.entity';
 
 @InputType()
 export class UpdateUserInput extends PartialType(CreateUserInput) {
@@ -29,6 +30,16 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
     message: ({ property }: ValidationArguments) => 'User is not exist',
   })
   id: number;
+
+  @Field({ nullable: true })
+  @Expose()
+  @IsInt()
+  @Validate(
+    Exists,
+    [Certificate, ({ object: { certificate_id } }) => ({ id: certificate_id }), ExistingTypes.ShouldBeExisted],
+    { message: ({ property }: ValidationArguments) => 'Certificate is not exist' },
+  )
+  certificate_id: number;
 
   @Field()
   @Expose()
