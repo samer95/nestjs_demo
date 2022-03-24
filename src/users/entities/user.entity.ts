@@ -19,12 +19,12 @@ export class User {
   @Field()
   last_name: string;
 
-  @Column()
+  @Column({ length: 60, unique: true })
   @Field()
   email: string;
 
-  @Column()
-  @Field()
+  @Column({ length: 60, unique: true, nullable: true })
+  @Field({ nullable: true })
   phone?: string;
 
   @Column()
