@@ -1,21 +1,24 @@
 import { HttpException, Injectable, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
-import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
 import { UpdateUserInput } from './dto/update-user.input';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { plainToInstance } from 'class-transformer';
 import { Certificate } from '../certificates/entities/certificate.entity';
 import { CertificatesService } from '../certificates/certificates.service';
+import { UpdateUserPermissionsInput } from './dto/update-user-permissions.input';
+import { UsersRepository } from './users.repository';
+import { Connection } from 'typeorm';
+import { UserPermission } from '../user-permissions/entities/user-permission.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    private userRepository: UsersRepository,
     private configService: ConfigService,
     private certificateService: CertificatesService,
+    private connection: Connection,
   ) {}
 
   @UsePipes(new ValidationPipe({ transform: true }))
@@ -36,7 +39,6 @@ export class UsersService {
   }
 
   getCertificate(id: number): Promise<Certificate> {
-    console.log('getCertificate', id);
     return this.certificateService.findOne(id, false);
   }
 
@@ -64,5 +66,28 @@ export class UsersService {
     }
     await this.userRepository.delete(id);
     return user;
+  }
+
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async updatePermissions(data: UpdateUserPermissionsInput): Promise<UserPermission[]> {
+    // Remove old permissions
+    await this.connection
+      .createQueryBuilder()
+      .delete()
+      .from(UserPermission)
+      .where('user_id = :user_id', { user_id: data.id })
+      .execute();
+
+    const userPermissions = data.permissions.map((permData) => {
+      const newObj = new UserPermission();
+      newObj.user_id = data.id;
+      newObj.object = permData.object;
+      newObj.action = permData.action;
+      return newObj;
+    });
+
+    return await this.connection.transaction(
+      async (manager) => await manager.save(userPermissions)
+    );
   }
 }

@@ -9,6 +9,9 @@ import { UsersModule } from './users/users.module';
 import { Exists } from './validators/isExists';
 import { AuthModule } from './auth/auth.module';
 import { CertificatesModule } from './certificates/certificates.module';
+import { CaslModule } from './casl/casl.module';
+import { PermissionsModule } from './permissions/permissions.module';
+import { UserPermissionsModule } from './user-permissions/user-permissions.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { CertificatesModule } from './certificates/certificates.module';
     UsersModule,
     AuthModule,
     CertificatesModule,
+    CaslModule,
+    PermissionsModule,
+    UserPermissionsModule,
   ],
   controllers: [],
   providers: [Exists],

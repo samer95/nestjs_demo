@@ -24,6 +24,7 @@
     "typeorm:migration:run": "npm run typeorm -- migration:run"
   },
   "dependencies": {
+    "@casl/ability": "^5.4.3",
     "@nestjs/apollo": "^10.0.7",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",

@@ -5,6 +5,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -12,6 +13,7 @@ import { UserTypes } from '../../enums/UserTypes';
 import { Genders } from '../../enums/Genders';
 import { Languages } from '../../enums/Languages';
 import { Certificate } from '../../certificates/entities/certificate.entity';
+import { UserPermission } from '../../user-permissions/entities/user-permission.entity';
 
 @Entity({ name: 'users' })
 @ObjectType()
@@ -88,6 +90,10 @@ export class User {
   @Field({ nullable: true })
   image?: string;
 
+  @Column({ type: 'bool', default: false })
+  @Field((type) => Boolean)
+  is_admin: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   @Field((type) => GraphQLISODateTime)
   created_at: Date;
@@ -103,4 +109,8 @@ export class User {
   @Field((type) => Certificate, { nullable: true })
   @JoinColumn({ name: 'certificate_id' })
   certificate: Certificate[];
+
+  @OneToMany(() => UserPermission, (userPermission) => userPermission.user)
+  @Field(() => [UserPermission], { nullable: true })
+  permissions: UserPermission[];
 }
