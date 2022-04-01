@@ -49,11 +49,16 @@ describe('CertificatesController', () => {
       expect(
         await controller.createCertificate(CREATE_CERTIFICATE_DTO),
       ).toEqual({
-        ...generateCertificate(CERTIFICATES_DATA.length + 1, CREATE_CERTIFICATE_DTO),
+        ...generateCertificate(
+          CERTIFICATES_DATA.length + 1,
+          CREATE_CERTIFICATE_DTO,
+        ),
         id: expect.any(Number),
       });
 
-      expect(certificatesServiceMock.create).toHaveBeenCalledWith(CREATE_CERTIFICATE_DTO);
+      expect(certificatesServiceMock.create).toHaveBeenCalledWith(
+        CREATE_CERTIFICATE_DTO,
+      );
     });
   });
 
@@ -67,27 +72,31 @@ describe('CertificatesController', () => {
 
   describe('findOne', () => {
     it('should get one certificate', async () => {
-      expect(
-        await controller.getById(CERTIFICATES_DATA[0].id),
-      ).toEqual(
-        { ...CERTIFICATES_DATA[0] },
-      );
+      expect(await controller.getById(CERTIFICATES_DATA[0].id)).toEqual({
+        ...CERTIFICATES_DATA[0],
+      });
 
-      expect(certificatesServiceMock.findOne).toHaveBeenCalledWith(CERTIFICATES_DATA[0].id);
+      expect(certificatesServiceMock.findOne).toHaveBeenCalledWith(
+        CERTIFICATES_DATA[0].id,
+      );
     });
   });
 
   describe('updateCertificate', () => {
     it('should update a certificate', async () => {
-      const updatedData = { ...UPDATE_CERTIFICATE_DTO, id: CERTIFICATES_DATA[0].id };
-      expect(
-        await controller.updateCertificate(updatedData),
-      ).toEqual({
+      const updatedData = {
+        ...UPDATE_CERTIFICATE_DTO,
+        id: CERTIFICATES_DATA[0].id,
+      };
+      expect(await controller.updateCertificate(updatedData)).toEqual({
         ...CERTIFICATES_DATA[0],
         ...updatedData,
       });
 
-      expect(certificatesServiceMock.update).toHaveBeenCalledWith(1, updatedData);
+      expect(certificatesServiceMock.update).toHaveBeenCalledWith(
+        1,
+        updatedData,
+      );
     });
   });
 
@@ -95,11 +104,11 @@ describe('CertificatesController', () => {
     it('should remove a certificate', async () => {
       expect(
         await controller.deleteCertificate(CERTIFICATES_DATA[0].id),
-      ).toEqual(
-        { ...CERTIFICATES_DATA[0] },
-      );
+      ).toEqual({ ...CERTIFICATES_DATA[0] });
 
-      expect(certificatesServiceMock.remove).toHaveBeenCalledWith(CERTIFICATES_DATA[0].id);
+      expect(certificatesServiceMock.remove).toHaveBeenCalledWith(
+        CERTIFICATES_DATA[0].id,
+      );
     });
   });
 });

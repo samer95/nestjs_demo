@@ -25,7 +25,9 @@ import { UserPermissionsModule } from './user-permissions/user-permissions.modul
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({ ...configService.get('db') }),
+      useFactory: async (configService: ConfigService) => ({
+        ...configService.get('db'),
+      }),
     }),
     UsersModule,
     AuthModule,

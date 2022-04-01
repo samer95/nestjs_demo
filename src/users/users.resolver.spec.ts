@@ -10,7 +10,10 @@ import {
   USERS_DATA,
 } from './test-data/users.test-data';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { usersRepositoryMock, usersServiceMock } from './test-data/users.test-mocks';
+import {
+  usersRepositoryMock,
+  usersServiceMock,
+} from './test-data/users.test-mocks';
 import { User } from './entities/user.entity';
 import { CaslAbilityFactory } from '../casl/casl-ability.factory';
 
@@ -51,9 +54,7 @@ describe('UsersResolver', () => {
         ...CREATE_USER_DTO,
         password_confirmation: CREATE_USER_DTO.password,
       };
-      expect(
-        await resolver.createUser(dto),
-      ).toEqual({
+      expect(await resolver.createUser(dto)).toEqual({
         ...generateUser(USERS_DATA.length + 1, CREATE_USER_DTO),
         id: expect.any(Number),
       });
@@ -72,11 +73,9 @@ describe('UsersResolver', () => {
 
   describe('findOne', () => {
     it('should get one user', async () => {
-      expect(
-        await resolver.findOne(USERS_DATA[0].id),
-      ).toEqual(
-        { ...USERS_DATA[0] },
-      );
+      expect(await resolver.findOne(USERS_DATA[0].id)).toEqual({
+        ...USERS_DATA[0],
+      });
 
       expect(usersServiceMock.findOne).toHaveBeenCalledWith(1);
     });
@@ -85,9 +84,7 @@ describe('UsersResolver', () => {
   describe('updateUser', () => {
     it('should update a user', async () => {
       const updatedData = { ...UPDATE_USER_DTO, id: USERS_DATA[0].id };
-      expect(
-        await resolver.updateUser(updatedData),
-      ).toEqual({
+      expect(await resolver.updateUser(updatedData)).toEqual({
         ...USERS_DATA[0],
         ...updatedData,
       });
@@ -110,11 +107,9 @@ describe('UsersResolver', () => {
 
   describe('removeUser', () => {
     it('should remove a user', async () => {
-      expect(
-        await resolver.removeUser(USERS_DATA[0].id),
-      ).toEqual(
-        { ...USERS_DATA[0] },
-      );
+      expect(await resolver.removeUser(USERS_DATA[0].id)).toEqual({
+        ...USERS_DATA[0],
+      });
 
       expect(usersServiceMock.remove).toHaveBeenCalledWith(USERS_DATA[0].id);
     });

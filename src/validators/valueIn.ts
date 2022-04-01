@@ -1,7 +1,7 @@
 import {
   registerDecorator,
-  ValidationOptions,
   ValidationArguments,
+  ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
@@ -32,7 +32,7 @@ export function ValueIn(
   validValues: Array<any> | any,
   validationOptions?: ValidationOptions,
 ) {
-  return function(object: Record<string, any>, propertyName: string): void {
+  return function (object: Record<string, any>, propertyName: string): void {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,

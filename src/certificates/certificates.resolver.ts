@@ -1,4 +1,12 @@
-import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { CertificatesService } from './certificates.service';
 import { Certificate } from './entities/certificate.entity';
 import { CreateCertificateInput } from './dto/create-certificate.input';
@@ -17,9 +25,14 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 export class CertificatesResolver {
   constructor(private readonly certificatesService: CertificatesService) {}
 
-  @CheckPolicies((ability: AppAbility) => ability.can(Action.Create, Certificate))
+  @CheckPolicies((ability: AppAbility) =>
+    ability.can(Action.Create, Certificate),
+  )
   @Mutation(() => Certificate)
-  createCertificate(@Args('createCertificateInput') createCertificateInput: CreateCertificateInput) {
+  createCertificate(
+    @Args('createCertificateInput')
+    createCertificateInput: CreateCertificateInput,
+  ) {
     return this.certificatesService.create(createCertificateInput);
   }
 
@@ -35,18 +48,28 @@ export class CertificatesResolver {
     return this.certificatesService.findOne(id);
   }
 
-  @ResolveField((returns) => [User])
+  @ResolveField(returns => [User])
   users(@Parent() certificate: Certificate): Promise<User[]> {
     return this.certificatesService.getUsers(certificate.id);
   }
 
-  @CheckPolicies((ability: AppAbility) => ability.can(Action.Update, Certificate))
+  @CheckPolicies((ability: AppAbility) =>
+    ability.can(Action.Update, Certificate),
+  )
   @Mutation(() => Certificate)
-  updateCertificate(@Args('updateCertificateInput') updateCertificateInput: UpdateCertificateInput) {
-    return this.certificatesService.update(updateCertificateInput.id, updateCertificateInput);
+  updateCertificate(
+    @Args('updateCertificateInput')
+    updateCertificateInput: UpdateCertificateInput,
+  ) {
+    return this.certificatesService.update(
+      updateCertificateInput.id,
+      updateCertificateInput,
+    );
   }
 
-  @CheckPolicies((ability: AppAbility) => ability.can(Action.Delete, Certificate))
+  @CheckPolicies((ability: AppAbility) =>
+    ability.can(Action.Delete, Certificate),
+  )
   @Mutation(() => Certificate)
   removeCertificate(@Args('id', { type: () => Int }) id: number) {
     return this.certificatesService.remove(id);

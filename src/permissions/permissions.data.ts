@@ -5,7 +5,10 @@ import { Permission } from './entities/permission.entity';
 import { PERMISSIONS_DEF } from './constants/permissions-def.constant';
 import { CRUD_PERMISSIONS } from './constants/crud-permissions.constant';
 
-function renderValue(renderType: PermissionMode, key: (() => PermissionItem) | string): string {
+function renderValue(
+  renderType: PermissionMode,
+  key: (() => PermissionItem) | string,
+): string {
   if (typeof key === 'string') {
     const permission = CRUD_PERMISSIONS[key];
     return permission ? permission[renderType] : key;
@@ -19,12 +22,12 @@ function renderValue(renderType: PermissionMode, key: (() => PermissionItem) | s
 }
 
 export const PERMISSIONS: Permission[] = (() => {
-  return PERMISSIONS_DEF.map((permission) => ({
+  return PERMISSIONS_DEF.map(permission => ({
     objectKey: permission.key,
     objectName: permission.object || '',
     objectLabel: permission.description,
     permissionType: permission.permissionType || PermissionType.CRUD,
-    permissions: permission.perm.map((perm) => ({
+    permissions: permission.perm.map(perm => ({
       key: renderValue(PermissionMode.KEY, perm),
       label: renderValue(PermissionMode.LABEL, perm),
     })),

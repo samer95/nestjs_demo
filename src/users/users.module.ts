@@ -10,7 +10,11 @@ import { CaslModule } from '../casl/casl.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UsersRepository, UserPermissionsRepository, User]),
+    TypeOrmModule.forFeature([
+      UsersRepository,
+      UserPermissionsRepository,
+      User,
+    ]),
     CertificatesModule,
     CaslModule,
   ],

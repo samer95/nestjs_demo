@@ -19,7 +19,10 @@ export const CERTIFICATES_DATA = [
 ];
 
 // Helpers
-export function generateCertificate(id: number, overrides?: Partial<Certificate>) {
+export function generateCertificate(
+  id: number,
+  overrides?: Partial<Certificate>,
+) {
   return {
     id,
     name: `Certificate-${id}`,

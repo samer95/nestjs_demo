@@ -38,10 +38,11 @@ describe('CertificatesService', () => {
 
   describe('create', () => {
     it('should create a certificate', async () => {
-      expect(
-        await service.create(CREATE_CERTIFICATE_DTO),
-      ).toEqual({
-        ...generateCertificate(CERTIFICATES_DATA.length + 1, CREATE_CERTIFICATE_DTO),
+      expect(await service.create(CREATE_CERTIFICATE_DTO)).toEqual({
+        ...generateCertificate(
+          CERTIFICATES_DATA.length + 1,
+          CREATE_CERTIFICATE_DTO,
+        ),
         id: expect.any(Number),
       });
     });
@@ -58,8 +59,12 @@ describe('CertificatesService', () => {
 
   describe('findOne', () => {
     it('should find a certificate by id', async () => {
-      expect(await service.findOne(CERTIFICATES_DATA[0].id)).toMatchObject(CERTIFICATES_DATA[0]);
-      expect(certificatesRepositoryMock.findOneOrFail).toHaveBeenCalledWith(CERTIFICATES_DATA[0].id);
+      expect(await service.findOne(CERTIFICATES_DATA[0].id)).toMatchObject(
+        CERTIFICATES_DATA[0],
+      );
+      expect(certificatesRepositoryMock.findOneOrFail).toHaveBeenCalledWith(
+        CERTIFICATES_DATA[0].id,
+      );
     });
   });
 
@@ -67,14 +72,19 @@ describe('CertificatesService', () => {
     it('should update a certificate', async () => {
       const dto = { id: CERTIFICATES_DATA[0].id, ...UPDATE_CERTIFICATE_DTO };
       const certificate = await service.update(CERTIFICATES_DATA[0].id, dto);
-      expect(certificate).toEqual({ ...CERTIFICATES_DATA[0], ...UPDATE_CERTIFICATE_DTO });
+      expect(certificate).toEqual({
+        ...CERTIFICATES_DATA[0],
+        ...UPDATE_CERTIFICATE_DTO,
+      });
       expect(certificatesRepositoryMock.save).toHaveBeenCalledWith(dto);
     });
   });
 
   describe('remove', () => {
     it('should delete a certificate and return { deleted: true }', () => {
-      expect(service.remove(CERTIFICATES_DATA[0].id)).resolves.toEqual({ ...CERTIFICATES_DATA[0] });
+      expect(service.remove(CERTIFICATES_DATA[0].id)).resolves.toEqual({
+        ...CERTIFICATES_DATA[0],
+      });
     });
   });
 });

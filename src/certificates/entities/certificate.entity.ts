@@ -1,5 +1,12 @@
-import { ObjectType, Field, Int, GraphQLISODateTime } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 
 @Entity({ name: 'certificates' })
@@ -21,16 +28,15 @@ export class Certificate {
   @Field({ nullable: true })
   description: string;
 
-
   @CreateDateColumn({ type: 'timestamp' })
-  @Field((type) => GraphQLISODateTime)
+  @Field(type => GraphQLISODateTime)
   created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
-  @Field((type) => GraphQLISODateTime)
+  @Field(type => GraphQLISODateTime)
   updated_at: Date;
 
-  @OneToMany(() => User, (user) => user.certificate)
+  @OneToMany(() => User, user => user.certificate)
   @Field(() => [User], { nullable: true })
   users: User[];
 }

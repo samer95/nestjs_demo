@@ -1,18 +1,37 @@
 import { CreateCertificateInput } from './create-certificate.input';
 import { Field, InputType, PartialType } from '@nestjs/graphql';
-import { IsInt, IsNotEmpty, IsString, MaxLength, MinLength, Validate, ValidationArguments } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+  Validate,
+  ValidationArguments,
+} from 'class-validator';
 import { ExistingTypes, Exists } from '../../validators/isExists';
 import { Certificate } from '../entities/certificate.entity';
 import { Expose } from 'class-transformer';
 
 @InputType()
-export class UpdateCertificateInput extends PartialType(CreateCertificateInput) {
+export class UpdateCertificateInput extends PartialType(
+  CreateCertificateInput,
+) {
   @Field()
   @IsInt()
   @IsNotEmpty()
-  @Validate(Exists, [Certificate, ({ object: { id } }) => ({ id }), ExistingTypes.ShouldBeExisted], {
-    message: ({ property }: ValidationArguments) => 'Certificate is not exist',
-  })
+  @Validate(
+    Exists,
+    [
+      Certificate,
+      ({ object: { id } }) => ({ id }),
+      ExistingTypes.ShouldBeExisted,
+    ],
+    {
+      message: ({ property }: ValidationArguments) =>
+        'Certificate is not exist',
+    },
+  )
   id: number;
 
   @Field()

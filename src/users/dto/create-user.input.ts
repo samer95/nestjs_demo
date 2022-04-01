@@ -23,9 +23,14 @@ export class CreateUserInput {
   @IsInt()
   @Validate(
     Exists,
-    [Certificate, ({ object: { certificate_id } }) => ({ id: certificate_id }), ExistingTypes.ShouldBeExisted],
+    [
+      Certificate,
+      ({ object: { certificate_id } }) => ({ id: certificate_id }),
+      ExistingTypes.ShouldBeExisted,
+    ],
     {
-      message: ({ property }: ValidationArguments) => 'Certificate is not exist',
+      message: ({ property }: ValidationArguments) =>
+        'Certificate is not exist',
     },
   )
   @IsOptional()
@@ -48,7 +53,8 @@ export class CreateUserInput {
   @IsEmail()
   @IsNotEmpty()
   @Validate(Exists, [User, ({ object: { email } }) => ({ email })], {
-    message: ({ property }: ValidationArguments) => `${property} is already exist`,
+    message: ({ property }: ValidationArguments) =>
+      `${property} is already exist`,
   })
   email: string;
 
@@ -57,7 +63,8 @@ export class CreateUserInput {
   @IsPhoneNumber('TR')
   @IsOptional()
   @Validate(Exists, [User, ({ object: { phone } }) => ({ phone })], {
-    message: ({ property }: ValidationArguments) => `${property} is already exist`,
+    message: ({ property }: ValidationArguments) =>
+      `${property} is already exist`,
   })
   phone?: string;
 

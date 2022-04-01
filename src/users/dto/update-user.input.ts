@@ -25,9 +25,13 @@ export class UpdateUserInput {
   @Field()
   @IsInt()
   @IsNotEmpty()
-  @Validate(Exists, [User, ({ object: { id } }) => ({ id }), ExistingTypes.ShouldBeExisted], {
-    message: ({ property }: ValidationArguments) => 'User is not exist',
-  })
+  @Validate(
+    Exists,
+    [User, ({ object: { id } }) => ({ id }), ExistingTypes.ShouldBeExisted],
+    {
+      message: ({ property }: ValidationArguments) => 'User is not exist',
+    },
+  )
   id: number;
 
   @Field({ nullable: true })
@@ -35,8 +39,15 @@ export class UpdateUserInput {
   @IsInt()
   @Validate(
     Exists,
-    [Certificate, ({ object: { certificate_id } }) => ({ id: certificate_id }), ExistingTypes.ShouldBeExisted],
-    { message: ({ property }: ValidationArguments) => 'Certificate is not exist' },
+    [
+      Certificate,
+      ({ object: { certificate_id } }) => ({ id: certificate_id }),
+      ExistingTypes.ShouldBeExisted,
+    ],
+    {
+      message: ({ property }: ValidationArguments) =>
+        'Certificate is not exist',
+    },
   )
   certificate_id: number;
 
@@ -56,18 +67,28 @@ export class UpdateUserInput {
   @Expose()
   @IsEmail()
   @IsNotEmpty()
-  @Validate(Exists, [User, ({ object: { id, email } }) => ({ id: Not(id), email })], {
-    message: ({ property }: ValidationArguments) => `${property} is already exist`,
-  })
+  @Validate(
+    Exists,
+    [User, ({ object: { id, email } }) => ({ id: Not(id), email })],
+    {
+      message: ({ property }: ValidationArguments) =>
+        `${property} is already exist`,
+    },
+  )
   email: string;
 
   @Field({ nullable: true })
   @Expose()
   @IsPhoneNumber('TR')
   @IsOptional()
-  @Validate(Exists, [User, ({ object: { id, phone } }) => ({ id: Not(id), phone })], {
-    message: ({ property }: ValidationArguments) => `${property} is already exist`,
-  })
+  @Validate(
+    Exists,
+    [User, ({ object: { id, phone } }) => ({ id: Not(id), phone })],
+    {
+      message: ({ property }: ValidationArguments) =>
+        `${property} is already exist`,
+    },
+  )
   phone?: string;
 
   @Field({ nullable: true })

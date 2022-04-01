@@ -1,4 +1,9 @@
-import { HttpException, Injectable, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CreateCertificateInput } from './dto/create-certificate.input';
 import { UpdateCertificateInput } from './dto/update-certificate.input';
 import { Repository } from 'typeorm';
@@ -10,7 +15,8 @@ import { User } from '../users/entities/user.entity';
 @Injectable()
 export class CertificatesService {
   constructor(
-    @InjectRepository(Certificate) private certificateRepository: Repository<Certificate>,
+    @InjectRepository(Certificate)
+    private certificateRepository: Repository<Certificate>,
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
@@ -55,7 +61,10 @@ export class CertificatesService {
   async remove(id: number) {
     const certificate = await this.certificateRepository.findOne(id);
     if (!certificate) {
-      throw new HttpException(`Certificate with the id: ${id} is not exist`, 422);
+      throw new HttpException(
+        `Certificate with the id: ${id} is not exist`,
+        422,
+      );
     }
     await this.certificateRepository.delete(id);
     return certificate;

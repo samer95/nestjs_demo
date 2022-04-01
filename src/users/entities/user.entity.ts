@@ -19,11 +19,11 @@ import { UserPermission } from '../../user-permissions/entities/user-permission.
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn()
-  @Field((type) => Int)
+  @Field(type => Int)
   id: number;
 
   @Column({ nullable: true })
-  @Field((type) => Int, { nullable: true })
+  @Field(type => Int, { nullable: true })
   certificate_id: number;
 
   @Column()
@@ -47,11 +47,11 @@ export class User {
   password: string;
 
   @Column({ type: 'timestamptz', nullable: true })
-  @Field((type) => GraphQLISODateTime, { nullable: true })
+  @Field(type => GraphQLISODateTime, { nullable: true })
   email_verified_at?: Date;
 
   @Column({ type: 'timestamptz', nullable: true })
-  @Field((type) => GraphQLISODateTime, { nullable: true })
+  @Field(type => GraphQLISODateTime, { nullable: true })
   phone_verified_at?: Date;
 
   @Column({
@@ -67,11 +67,11 @@ export class User {
   gender?: string;
 
   @Column({ type: 'date', nullable: true })
-  @Field((type) => GraphQLISODateTime, { nullable: true })
+  @Field(type => GraphQLISODateTime, { nullable: true })
   birthdate?: Date;
 
   @Column({ type: 'int', default: 1 })
-  @Field((type) => Int)
+  @Field(type => Int)
   max_facilities_count: number;
 
   @Column({ type: 'enum', enum: Languages, default: Languages.TR })
@@ -91,26 +91,26 @@ export class User {
   image?: string;
 
   @Column({ type: 'bool', default: false })
-  @Field((type) => Boolean)
+  @Field(type => Boolean)
   is_admin: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
-  @Field((type) => GraphQLISODateTime)
+  @Field(type => GraphQLISODateTime)
   created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
-  @Field((type) => GraphQLISODateTime)
+  @Field(type => GraphQLISODateTime)
   updated_at: Date;
 
-  @ManyToOne((type) => Certificate, (certificate) => certificate.users, {
+  @ManyToOne(type => Certificate, certificate => certificate.users, {
     nullable: true,
     onDelete: 'SET NULL',
   })
-  @Field((type) => Certificate, { nullable: true })
+  @Field(type => Certificate, { nullable: true })
   @JoinColumn({ name: 'certificate_id' })
   certificate: Certificate[];
 
-  @OneToMany(() => UserPermission, (userPermission) => userPermission.user)
+  @OneToMany(() => UserPermission, userPermission => userPermission.user)
   @Field(() => [UserPermission], { nullable: true })
   permissions: UserPermission[];
 }

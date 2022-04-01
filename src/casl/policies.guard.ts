@@ -26,10 +26,14 @@ export class PoliciesGuard implements CanActivate {
     let canAccess;
     try {
       const { user } = GqlExecutionContext.create(context).getContext().req;
-      const storedUser = await this.userRepository.findOneOrFail(user.id, { relations: ['permissions'] });
+      const storedUser = await this.userRepository.findOneOrFail(user.id, {
+        relations: ['permissions'],
+      });
       const ability = this.caslAbilityFactory.createForUser(storedUser);
 
-      canAccess = policyHandlers.every((handler) => this.execPolicyHandler(handler, ability));
+      canAccess = policyHandlers.every(handler =>
+        this.execPolicyHandler(handler, ability),
+      );
     } catch (error) {
       canAccess = false;
       console.log('Error in canActivate function: ', error);

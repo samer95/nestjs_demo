@@ -78,22 +78,35 @@ describe('UsersService', () => {
 
   describe('findOne', () => {
     it('should find a user by id', async () => {
-      expect(await service.findOne(USERS_DATA[0].id)).toMatchObject(USERS_DATA[0]);
-      expect(usersRepositoryMock.findOneOrFail).toHaveBeenCalledWith(USERS_DATA[0].id);
+      expect(await service.findOne(USERS_DATA[0].id)).toMatchObject(
+        USERS_DATA[0],
+      );
+      expect(usersRepositoryMock.findOneOrFail).toHaveBeenCalledWith(
+        USERS_DATA[0].id,
+      );
     });
   });
 
   describe('getCertificate', () => {
     it('should find a certificate by id', async () => {
-      expect(await service.getCertificate(CERTIFICATES_DATA[0].id)).toMatchObject(CERTIFICATES_DATA[0]);
-      expect(certificatesServiceMock.findOne).toHaveBeenCalledWith(CERTIFICATES_DATA[0].id, false);
+      expect(
+        await service.getCertificate(CERTIFICATES_DATA[0].id),
+      ).toMatchObject(CERTIFICATES_DATA[0]);
+      expect(certificatesServiceMock.findOne).toHaveBeenCalledWith(
+        CERTIFICATES_DATA[0].id,
+        false,
+      );
     });
   });
 
   describe('findByEmail', () => {
     it('should find a user by email', async () => {
-      expect(await service.findByEmail(USERS_DATA[0].email)).toMatchObject(USERS_DATA[0]);
-      expect(usersRepositoryMock.findOne).toHaveBeenCalledWith({ email: USERS_DATA[0].email });
+      expect(await service.findByEmail(USERS_DATA[0].email)).toMatchObject(
+        USERS_DATA[0],
+      );
+      expect(usersRepositoryMock.findOne).toHaveBeenCalledWith({
+        email: USERS_DATA[0].email,
+      });
     });
   });
 
@@ -103,7 +116,9 @@ describe('UsersService', () => {
         first_name: 'UserFN-1',
         last_name: 'UserLN-1',
       };
-      expect(await service.findByOptions(options)).toMatchObject([...USERS_DATA]);
+      expect(await service.findByOptions(options)).toMatchObject([
+        ...USERS_DATA,
+      ]);
       expect(usersRepositoryMock.find).toHaveBeenCalledWith(options);
     });
   });
@@ -119,7 +134,9 @@ describe('UsersService', () => {
 
   describe('remove', () => {
     it('should delete a user and return { deleted: true }', () => {
-      expect(service.remove(USERS_DATA[0].id)).resolves.toEqual({ ...USERS_DATA[0] });
+      expect(service.remove(USERS_DATA[0].id)).resolves.toEqual({
+        ...USERS_DATA[0],
+      });
     });
   });
 

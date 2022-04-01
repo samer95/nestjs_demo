@@ -1,4 +1,8 @@
-import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
+import {
+  ValidationArguments,
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+} from 'class-validator';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/typeorm';
 import { Connection, EntitySchema, FindConditions, ObjectType } from 'typeorm';
@@ -20,10 +24,19 @@ export abstract class ExistsValidator implements ValidatorConstraintInterface {
   protected constructor(protected readonly connection: Connection) {}
 
   public async validate<E>(value: string, args: ExistsValidationArguments<E>) {
-    const [EntityClass, findCondition = args.property, existing = ExistingTypes.ShouldNotBeExisted] = args.constraints;
-    const entitiesCount = await this.connection.getRepository(EntityClass).count({
-      where: typeof findCondition === 'function' ? findCondition(args) : { [findCondition || args.property]: value },
-    });
+    const [
+      EntityClass,
+      findCondition = args.property,
+      existing = ExistingTypes.ShouldNotBeExisted,
+    ] = args.constraints;
+    const entitiesCount = await this.connection
+      .getRepository(EntityClass)
+      .count({
+        where:
+          typeof findCondition === 'function'
+            ? findCondition(args)
+            : { [findCondition || args.property]: value },
+      });
     switch (existing) {
       case ExistingTypes.ShouldBeExisted:
         return entitiesCount > 0; // Don't throw an error if the entity is found

@@ -1,4 +1,12 @@
-import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
@@ -39,7 +47,7 @@ export class UsersResolver {
   }
 
   @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, User))
-  @ResolveField((returns) => Certificate)
+  @ResolveField(returns => Certificate)
   certificate(@Parent() user: User): Promise<Certificate> {
     if (!user.certificate_id) return null;
 
@@ -55,10 +63,11 @@ export class UsersResolver {
   @CheckPolicies((ability: AppAbility) => ability.can(Action.Update, User))
   @Mutation(() => [UserPermission])
   updateUserPermissions(
-    @Args('updateUserPermissionsInput') updateUserPermissionsInput: UpdateUserPermissionsInput,
+    @Args('updateUserPermissionsInput')
+    updateUserPermissionsInput: UpdateUserPermissionsInput,
   ): Promise<UserPermission[]> {
     let errValue = '';
-    updateUserPermissionsInput.permissions.forEach((permission) => {
+    updateUserPermissionsInput.permissions.forEach(permission => {
       if (!Object.values(Action).includes(permission.action)) {
         errValue = `action: ${permission.action}`;
       }

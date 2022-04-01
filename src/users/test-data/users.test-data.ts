@@ -18,11 +18,7 @@ export const UPDATE_USER_DTO = {
   email: 'updated-user@gmail.com',
 };
 
-export const USERS_DATA = [
-  generateUser(1),
-  generateUser(2),
-  generateUser(3),
-];
+export const USERS_DATA = [generateUser(1), generateUser(2), generateUser(3)];
 
 export const UPDATE_USER_PERMISSIONS_DTO = {
   id: 15,

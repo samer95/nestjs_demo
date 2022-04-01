@@ -1,4 +1,10 @@
-import { Ability, AbilityBuilder, AbilityClass, ExtractSubjectType, InferSubjects } from '@casl/ability';
+import {
+  Ability,
+  AbilityBuilder,
+  AbilityClass,
+  ExtractSubjectType,
+  InferSubjects,
+} from '@casl/ability';
 import { User } from '../users/entities/user.entity';
 import { Action } from '../enums/action.enum';
 import { Injectable } from '@nestjs/common';
@@ -9,19 +15,24 @@ import { OBJECTS } from '../permissions/constants/objects.constant';
 import { Permission } from '../permissions/entities/permission.entity';
 
 // TODO: Add more subject type here
-type Subjects = InferSubjects<typeof Certificate | typeof User | typeof Permission> | 'all';
+type Subjects =
+  | InferSubjects<typeof Certificate | typeof User | typeof Permission>
+  | 'all';
 
 export type AppAbility = Ability<[Action, Subjects]>;
 
 @Injectable()
 export class CaslAbilityFactory {
   createForUser(user: User) {
-    const { can, cannot, build } = new AbilityBuilder<Ability<[Action, Subjects]>>(Ability as AbilityClass<AppAbility>);
+    const { can, cannot, build } = new AbilityBuilder<
+      Ability<[Action, Subjects]>
+    >(Ability as AbilityClass<AppAbility>);
 
     this.initUserAccessibility(user, can, cannot);
 
     return build({
-      detectSubjectType: (item) => item.constructor as ExtractSubjectType<Subjects>,
+      detectSubjectType: item =>
+        item.constructor as ExtractSubjectType<Subjects>,
     });
   }
 
@@ -30,8 +41,10 @@ export class CaslAbilityFactory {
       can(Action.Manage, 'all'); // read-write access to everything
     }
 
-    const userPermissions = user.permissions.map((p) => `${p.action}.${p.object}`);
-    PERMISSIONS.filter((p) => p.permissionType === PermissionType.CRUD).forEach(
+    const userPermissions = user.permissions.map(
+      p => `${p.action}.${p.object}`,
+    );
+    PERMISSIONS.filter(p => p.permissionType === PermissionType.CRUD).forEach(
       ({ objectKey, permissions, objectName }) => {
         permissions.forEach(({ key }) => {
           if (userPermissions.includes(`${key}.${objectKey}`)) {

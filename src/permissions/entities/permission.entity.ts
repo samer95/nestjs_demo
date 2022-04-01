@@ -15,6 +15,6 @@ export class Permission {
   @Field()
   permissionType: string;
 
-  @Field((type) => [PermissionItem])
+  @Field(type => [PermissionItem])
   permissions: PermissionItem[];
 }

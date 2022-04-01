@@ -13,7 +13,9 @@ import { Permission } from '../permissions/entities/permission.entity';
 @UseGuards(PoliciesGuard)
 @UseGuards(JwtAuthGuard)
 export class UserPermissionsResolver {
-  constructor(private readonly userPermissionsService: UserPermissionsService) {}
+  constructor(
+    private readonly userPermissionsService: UserPermissionsService,
+  ) {}
 
   @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, Permission))
   @Query(() => [UserPermission], { name: 'userPermissions' })

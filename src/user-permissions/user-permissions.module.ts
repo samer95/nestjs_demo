@@ -8,7 +8,10 @@ import { User } from '../users/entities/user.entity';
 import { CaslModule } from '../casl/casl.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserPermission, UserPermissionsRepository, User]), CaslModule],
+  imports: [
+    TypeOrmModule.forFeature([UserPermission, UserPermissionsRepository, User]),
+    CaslModule,
+  ],
   providers: [UserPermissionsResolver, UserPermissionsService],
   exports: [TypeOrmModule, UserPermissionsService],
 })

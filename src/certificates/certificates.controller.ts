@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { PoliciesGuard } from '../casl/policies.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CertificatesService } from './certificates.service';
@@ -16,8 +25,12 @@ export class CertificatesController {
   constructor(private readonly certificatesService: CertificatesService) {}
 
   @Post()
-  @CheckPolicies((ability: AppAbility) => ability.can(Action.Create, Certificate))
-  async createCertificate(@Body() createCertificateInput: CreateCertificateInput): Promise<Certificate> {
+  @CheckPolicies((ability: AppAbility) =>
+    ability.can(Action.Create, Certificate),
+  )
+  async createCertificate(
+    @Body() createCertificateInput: CreateCertificateInput,
+  ): Promise<Certificate> {
     return this.certificatesService.create(createCertificateInput);
   }
 
@@ -34,13 +47,22 @@ export class CertificatesController {
   }
 
   @Patch()
-  @CheckPolicies((ability: AppAbility) => ability.can(Action.Update, Certificate))
-  async updateCertificate(@Body() updateCertificateInput: UpdateCertificateInput): Promise<Certificate> {
-    return this.certificatesService.update(updateCertificateInput.id, updateCertificateInput);
+  @CheckPolicies((ability: AppAbility) =>
+    ability.can(Action.Update, Certificate),
+  )
+  async updateCertificate(
+    @Body() updateCertificateInput: UpdateCertificateInput,
+  ): Promise<Certificate> {
+    return this.certificatesService.update(
+      updateCertificateInput.id,
+      updateCertificateInput,
+    );
   }
 
   @Delete('/:id')
-  @CheckPolicies((ability: AppAbility) => ability.can(Action.Delete, Certificate))
+  @CheckPolicies((ability: AppAbility) =>
+    ability.can(Action.Delete, Certificate),
+  )
   async deleteCertificate(@Param('id') id: number): Promise<Certificate> {
     return this.certificatesService.remove(id);
   }

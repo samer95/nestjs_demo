@@ -10,11 +10,17 @@ import { UsersService } from '../users/users.service';
 
 @Resolver()
 export class AuthResolver {
-  constructor(private authService: AuthService, private usersService: UsersService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
 
   @Mutation(() => LoginResponse)
   @UseGuards(LocalAuthGuard)
-  login(@Args('loginUserInput') loginUserInput: LoginUserInput, @Context() context) {
+  login(
+    @Args('loginUserInput') loginUserInput: LoginUserInput,
+    @Context() context,
+  ) {
     return this.authService.login(context.user);
   }
 

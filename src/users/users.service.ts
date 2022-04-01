@@ -1,4 +1,9 @@
-import { HttpException, Injectable, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './entities/user.entity';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -23,8 +28,13 @@ export class UsersService {
 
   @UsePipes(new ValidationPipe({ transform: true }))
   async create(createUserInput: CreateUserInput): Promise<User> {
-    const userData = plainToInstance(CreateUserInput, createUserInput, { excludeExtraneousValues: true });
-    userData.password = await bcrypt.hash(createUserInput.password, this.configService.get('settings.passSalt'));
+    const userData = plainToInstance(CreateUserInput, createUserInput, {
+      excludeExtraneousValues: true,
+    });
+    userData.password = await bcrypt.hash(
+      createUserInput.password,
+      this.configService.get('settings.passSalt'),
+    );
 
     const newUser = this.userRepository.create(userData);
     return this.userRepository.save(newUser);
@@ -51,10 +61,19 @@ export class UsersService {
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
-    const updatedData = plainToInstance(UpdateUserInput, updateUserInput, { excludeExtraneousValues: true });
+    const updatedData = plainToInstance(UpdateUserInput, updateUserInput, {
+      excludeExtraneousValues: true,
+    });
 
-    const optionalAttrs = ['user_type', 'gender', 'max_facilities_count', 'lang'];
-    optionalAttrs.forEach((attr) => !updatedData[attr] && delete updatedData[attr]);
+    const optionalAttrs = [
+      'user_type',
+      'gender',
+      'max_facilities_count',
+      'lang',
+    ];
+    optionalAttrs.forEach(
+      attr => !updatedData[attr] && delete updatedData[attr],
+    );
 
     return this.userRepository.save({ id, ...updatedData });
   }
@@ -69,7 +88,9 @@ export class UsersService {
   }
 
   @UsePipes(new ValidationPipe({ transform: true }))
-  async updatePermissions(data: UpdateUserPermissionsInput): Promise<UserPermission[]> {
+  async updatePermissions(
+    data: UpdateUserPermissionsInput,
+  ): Promise<UserPermission[]> {
     // Remove old permissions
     await this.connection
       .createQueryBuilder()
@@ -78,7 +99,7 @@ export class UsersService {
       .where('user_id = :user_id', { user_id: data.id })
       .execute();
 
-    const userPermissions = data.permissions.map((permData) => {
+    const userPermissions = data.permissions.map(permData => {
       const newObj = new UserPermission();
       newObj.user_id = data.id;
       newObj.object = permData.object;
@@ -87,7 +108,7 @@ export class UsersService {
     });
 
     return await this.connection.transaction(
-      async (manager) => await manager.save(userPermissions)
+      async manager => await manager.save(userPermissions),
     );
   }
 }

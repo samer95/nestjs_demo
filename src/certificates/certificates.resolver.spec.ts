@@ -46,14 +46,17 @@ describe('CertificatesResolver', () => {
 
   describe('createCertificate', () => {
     it('should create a new certificate', async () => {
-      expect(
-        await resolver.createCertificate(CREATE_CERTIFICATE_DTO),
-      ).toEqual({
-        ...generateCertificate(CERTIFICATES_DATA.length + 1, CREATE_CERTIFICATE_DTO),
+      expect(await resolver.createCertificate(CREATE_CERTIFICATE_DTO)).toEqual({
+        ...generateCertificate(
+          CERTIFICATES_DATA.length + 1,
+          CREATE_CERTIFICATE_DTO,
+        ),
         id: expect.any(Number),
       });
 
-      expect(certificatesServiceMock.create).toHaveBeenCalledWith(CREATE_CERTIFICATE_DTO);
+      expect(certificatesServiceMock.create).toHaveBeenCalledWith(
+        CREATE_CERTIFICATE_DTO,
+      );
     });
   });
 
@@ -67,39 +70,43 @@ describe('CertificatesResolver', () => {
 
   describe('findOne', () => {
     it('should get one certificate', async () => {
-      expect(
-        await resolver.findOne(CERTIFICATES_DATA[0].id),
-      ).toEqual(
-        { ...CERTIFICATES_DATA[0] },
-      );
+      expect(await resolver.findOne(CERTIFICATES_DATA[0].id)).toEqual({
+        ...CERTIFICATES_DATA[0],
+      });
 
-      expect(certificatesServiceMock.findOne).toHaveBeenCalledWith(CERTIFICATES_DATA[0].id);
+      expect(certificatesServiceMock.findOne).toHaveBeenCalledWith(
+        CERTIFICATES_DATA[0].id,
+      );
     });
   });
 
   describe('updateCertificate', () => {
     it('should update a certificate', async () => {
-      const updatedData = { ...UPDATE_CERTIFICATE_DTO, id: CERTIFICATES_DATA[0].id };
-      expect(
-        await resolver.updateCertificate(updatedData),
-      ).toEqual({
+      const updatedData = {
+        ...UPDATE_CERTIFICATE_DTO,
+        id: CERTIFICATES_DATA[0].id,
+      };
+      expect(await resolver.updateCertificate(updatedData)).toEqual({
         ...CERTIFICATES_DATA[0],
         ...updatedData,
       });
 
-      expect(certificatesServiceMock.update).toHaveBeenCalledWith(1, updatedData);
+      expect(certificatesServiceMock.update).toHaveBeenCalledWith(
+        1,
+        updatedData,
+      );
     });
   });
 
   describe('removeCertificate', () => {
     it('should remove a certificate', async () => {
-      expect(
-        await resolver.removeCertificate(CERTIFICATES_DATA[0].id),
-      ).toEqual(
+      expect(await resolver.removeCertificate(CERTIFICATES_DATA[0].id)).toEqual(
         { ...CERTIFICATES_DATA[0] },
       );
 
-      expect(certificatesServiceMock.remove).toHaveBeenCalledWith(CERTIFICATES_DATA[0].id);
+      expect(certificatesServiceMock.remove).toHaveBeenCalledWith(
+        CERTIFICATES_DATA[0].id,
+      );
     });
   });
 });
