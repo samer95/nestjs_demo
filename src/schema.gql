@@ -103,14 +103,12 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
+  id: Float!
   certificate_id: Float
   first_name: String!
   last_name: String!
   email: String!
   phone: String
-  password: String
-  password_confirmation: String
-  id: Float!
   user_type: String
   gender: String
   birthdate: String
