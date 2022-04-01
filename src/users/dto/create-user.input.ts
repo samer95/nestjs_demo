@@ -21,10 +21,15 @@ import { Certificate } from '../../certificates/entities/certificate.entity';
 export class CreateUserInput {
   @Field({ nullable: true })
   @IsInt()
-  @Validate(Exists, [Certificate, ({ object: { id } }) => ({ id }), ExistingTypes.ShouldBeExisted], {
-    message: ({ property }: ValidationArguments) => 'Certificate is not exist',
-  })
-  certificate_id: number;
+  @Validate(
+    Exists,
+    [Certificate, ({ object: { certificate_id } }) => ({ id: certificate_id }), ExistingTypes.ShouldBeExisted],
+    {
+      message: ({ property }: ValidationArguments) => 'Certificate is not exist',
+    },
+  )
+  @IsOptional()
+  certificate_id?: number;
 
   @Field()
   @Expose()
