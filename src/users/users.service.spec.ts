@@ -12,13 +12,13 @@ import {
 import { UsersRepository } from './users.repository';
 import { ConfigService } from '@nestjs/config';
 import { CertificatesService } from '../certificates/certificates.service';
-import { CERTIFICATES_DATA } from '../certificates/certificates.test-data';
 import {
   certificatesServiceMock,
   configServiceMock,
   connectionMock,
   usersRepositoryMock,
 } from './test-data/users.test-mocks';
+import { CERTIFICATES_DATA } from '../certificates/test-data/certificates.test-data';
 
 describe('UsersService', () => {
   let service: UsersService;

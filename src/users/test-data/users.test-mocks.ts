@@ -1,6 +1,5 @@
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
-import { CERTIFICATES_DATA } from '../../certificates/certificates.test-data';
 import {
   CREATE_USER_DTO,
   generateUser,
@@ -8,6 +7,7 @@ import {
   USER_PERMISSIONS,
   USERS_DATA,
 } from './users.test-data';
+import { CERTIFICATES_DATA } from '../../certificates/test-data/certificates.test-data';
 
 export type MockType<T> = {
   [P in keyof T]?: jest.Mock<unknown>;
