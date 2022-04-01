@@ -1,5 +1,4 @@
-import { CreateUserInput } from './create-user.input';
-import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { Expose } from 'class-transformer';
 import {
   IsDate,
@@ -22,7 +21,7 @@ import { Not } from 'typeorm';
 import { Certificate } from '../../certificates/entities/certificate.entity';
 
 @InputType()
-export class UpdateUserInput extends PartialType(CreateUserInput) {
+export class UpdateUserInput {
   @Field()
   @IsInt()
   @IsNotEmpty()
