@@ -70,6 +70,25 @@ type LoginResponse {
   user: User!
 }
 
+type Transaction {
+  id: Int!
+  block_id: Int
+  t_hash: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  block: Block
+}
+
+type Block {
+  id: Int!
+  b_hash: String!
+  b_number: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  transactions: [Transaction!]
+  transaction: [Transaction!]!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
@@ -78,6 +97,9 @@ type Query {
   permissions: [Permission!]!
   userPermissions: [UserPermission!]!
   userPermission(id: Int!): UserPermission!
+  blocks: [Block!]!
+  block(id: Int!): Block!
+  transactions: [Transaction!]!
 }
 
 type Mutation {
@@ -90,6 +112,8 @@ type Mutation {
   removeCertificate(id: Int!): Certificate!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   register(registerUserInput: CreateUserInput!): User!
+  createBlock(createBlockInput: CreateBlockInput!): Block!
+  fetchBlocks(fetchBlocksInput: FetchBlocksInput!): String!
 }
 
 input CreateUserInput {
@@ -144,4 +168,15 @@ input UpdateCertificateInput {
 input LoginUserInput {
   email: String!
   password: String!
+}
+
+input CreateBlockInput {
+  b_hash: String!
+  b_number: Int!
+  transactions: [String!]!
+}
+
+input FetchBlocksInput {
+  startNumber: Int!
+  resetCache: Boolean = false
 }

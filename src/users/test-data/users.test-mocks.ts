@@ -36,6 +36,10 @@ export const configServiceMock: MockType<any> = {
     switch (key) {
       case 'settings.passSalt':
         return 10;
+      case 'settings.infura.projectId':
+        return 'PROJECT_ID';
+      case 'settings.redis.ttl':
+        return 86400;
       default:
         return key;
     }

@@ -7,7 +7,7 @@ export default registerAs('db', () => ({
   username: process.env.DB_USER || '',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || '',
-  logging: true,
+  logging: process.env.DB_LOGGING === 'true',
   autoLoadEntities: true,
   synchronize: process.env.APP_ENV === 'development',
   entities: ['../src/**/*.entity.{ts,js}'],

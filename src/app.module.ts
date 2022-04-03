@@ -12,6 +12,9 @@ import { CertificatesModule } from './certificates/certificates.module';
 import { CaslModule } from './casl/casl.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { UserPermissionsModule } from './user-permissions/user-permissions.module';
+import { BlocksModule } from './blocks/blocks.module';
+import { TransactionsModule } from './transactions/transactions.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -29,12 +32,23 @@ import { UserPermissionsModule } from './user-permissions/user-permissions.modul
         ...configService.get('db'),
       }),
     }),
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('settings.redis.host'),
+          port: configService.get('settings.redis.port'),
+        },
+      }),
+    }),
     UsersModule,
     AuthModule,
     CertificatesModule,
     CaslModule,
     PermissionsModule,
     UserPermissionsModule,
+    BlocksModule,
+    TransactionsModule,
   ],
   controllers: [],
   providers: [Exists],
