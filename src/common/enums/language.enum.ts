@@ -1,4 +1,4 @@
-export enum Languages {
+export enum Language {
   TR = 'tr',
   EN = 'en',
 }

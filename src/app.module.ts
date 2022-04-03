@@ -6,7 +6,7 @@ import config from '../config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
-import { Exists } from './validators/isExists';
+import { Exists } from './common/validators/isExists';
 import { AuthModule } from './auth/auth.module';
 import { CertificatesModule } from './certificates/certificates.module';
 import { CaslModule } from './casl/casl.module';

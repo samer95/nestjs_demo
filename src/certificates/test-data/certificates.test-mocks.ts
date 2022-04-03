@@ -5,10 +5,8 @@ import {
   CREATE_CERTIFICATE_DTO,
   generateCertificate,
 } from './certificates.test-data';
+import { MockType } from '../../common/types/mock.type';
 
-export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<unknown>;
-};
 export const certificatesRepositoryMock: MockType<Repository<Certificate>> = {
   create: jest.fn().mockImplementation(dto => dto),
   save: jest.fn().mockImplementation(certificate => {
@@ -32,6 +30,7 @@ export const certificatesRepositoryMock: MockType<Repository<Certificate>> = {
     .mockImplementation((id: number) => Promise.resolve(CERTIFICATES_DATA[0])),
   delete: jest.fn().mockResolvedValue(true),
 };
+
 export const configServiceMock: MockType<any> = {
   get: jest.fn().mockImplementation(key => {
     switch (key) {
@@ -42,6 +41,7 @@ export const configServiceMock: MockType<any> = {
     }
   }),
 };
+
 export const connectionMock: MockType<any> = {
   createQueryBuilder: jest.fn(() => ({
     delete: jest.fn().mockReturnThis(),

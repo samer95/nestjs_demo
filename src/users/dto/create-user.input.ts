@@ -11,9 +11,9 @@ import {
   Validate,
   ValidationArguments,
 } from 'class-validator';
-import { IsEqualToProp } from '../../validators/isEqualToProp';
+import { IsEqualToProp } from '../../common/validators/isEqualToProp';
 import { Expose } from 'class-transformer';
-import { ExistingTypes, Exists } from '../../validators/isExists';
+import { ExistingTypes, Exists } from '../../common/validators/isExists';
 import { User } from '../entities/user.entity';
 import { Certificate } from '../../certificates/entities/certificate.entity';
 

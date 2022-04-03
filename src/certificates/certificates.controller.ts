@@ -13,7 +13,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CertificatesService } from './certificates.service';
 import { CheckPolicies } from '../casl/check-policies.decorator';
 import { AppAbility } from '../casl/casl-ability.factory';
-import { Action } from '../enums/action.enum';
+import { Action } from '../common/enums/action.enum';
 import { Certificate } from './entities/certificate.entity';
 import { CreateCertificateInput } from './dto/create-certificate.input';
 import { UpdateCertificateInput } from './dto/update-certificate.input';

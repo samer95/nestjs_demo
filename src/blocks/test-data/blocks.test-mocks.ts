@@ -5,10 +5,8 @@ import {
   CREATE_BLOCK_DTO,
   generateBlock,
 } from './blocks.test-data';
+import { MockType } from '../../common/types/mock.type';
 
-export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<unknown>;
-};
 export const blocksRepositoryMock: MockType<Repository<Block>> = {
   create: jest.fn().mockImplementation(dto => dto),
   save: jest.fn().mockImplementation(block => {

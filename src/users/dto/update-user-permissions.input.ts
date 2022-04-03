@@ -7,10 +7,10 @@ import {
   Validate,
   ValidationArguments,
 } from 'class-validator';
-import { ExistingTypes, Exists } from '../../validators/isExists';
+import { ExistingTypes, Exists } from '../../common/validators/isExists';
 import { User } from '../entities/user.entity';
 import { ObjectsKeys } from '../../permissions/constants/objects.constant';
-import { Action } from '../../enums/action.enum';
+import { Action } from '../../common/enums/action.enum';
 
 @ObjectType()
 @InputType()

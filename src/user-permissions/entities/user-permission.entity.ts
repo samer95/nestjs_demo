@@ -9,7 +9,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { Action } from '../../enums/action.enum';
+import { Action } from '../../common/enums/action.enum';
 import { User } from '../../users/entities/user.entity';
 
 @ObjectType()

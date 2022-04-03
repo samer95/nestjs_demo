@@ -16,7 +16,7 @@ import { PoliciesGuard } from '../casl/policies.guard';
 import { UseGuards } from '@nestjs/common';
 import { CheckPolicies } from '../casl/check-policies.decorator';
 import { AppAbility } from '../casl/casl-ability.factory';
-import { Action } from '../enums/action.enum';
+import { Action } from '../common/enums/action.enum';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Resolver(() => Certificate)

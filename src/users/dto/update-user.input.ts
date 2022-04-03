@@ -12,11 +12,11 @@ import {
   Validate,
   ValidationArguments,
 } from 'class-validator';
-import { ExistingTypes, Exists } from '../../validators/isExists';
+import { ExistingTypes, Exists } from '../../common/validators/isExists';
 import { User } from '../entities/user.entity';
-import { UserTypes } from '../../enums/UserTypes';
-import { Genders } from '../../enums/Genders';
-import { Languages } from '../../enums/Languages';
+import { UserType } from '../../common/enums/user-type.enum';
+import { Gender } from '../../common/enums/gender.enum';
+import { Language } from '../../common/enums/language.enum';
 import { Not } from 'typeorm';
 import { Certificate } from '../../certificates/entities/certificate.entity';
 
@@ -94,13 +94,13 @@ export class UpdateUserInput {
   @Field({ nullable: true })
   @Expose()
   @IsOptional()
-  @IsEnum(UserTypes)
+  @IsEnum(UserType)
   user_type?: string;
 
   @Field({ nullable: true })
   @Expose()
   @IsOptional()
-  @IsEnum(Genders)
+  @IsEnum(Gender)
   gender?: string;
 
   @Field({ nullable: true })
@@ -119,7 +119,7 @@ export class UpdateUserInput {
   @Expose()
   @IsOptional()
   @IsString()
-  @IsEnum(Languages)
+  @IsEnum(Language)
   lang?: string;
 
   @Field({ nullable: true })

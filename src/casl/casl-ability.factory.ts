@@ -6,7 +6,7 @@ import {
   InferSubjects,
 } from '@casl/ability';
 import { User } from '../users/entities/user.entity';
-import { Action } from '../enums/action.enum';
+import { Action } from '../common/enums/action.enum';
 import { Injectable } from '@nestjs/common';
 import { Certificate } from '../certificates/entities/certificate.entity';
 import { PERMISSIONS } from '../permissions/permissions.data';

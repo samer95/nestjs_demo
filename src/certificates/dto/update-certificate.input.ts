@@ -9,7 +9,7 @@ import {
   Validate,
   ValidationArguments,
 } from 'class-validator';
-import { ExistingTypes, Exists } from '../../validators/isExists';
+import { ExistingTypes, Exists } from '../../common/validators/isExists';
 import { Certificate } from '../entities/certificate.entity';
 import { Expose } from 'class-transformer';
 

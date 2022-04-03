@@ -1,5 +1,5 @@
 import { User } from '../entities/user.entity';
-import { Action } from '../../enums/action.enum';
+import { Action } from '../../common/enums/action.enum';
 import { ObjectsKeys } from '../../permissions/constants/objects.constant';
 import { UserPermission } from '../../user-permissions/entities/user-permission.entity';
 

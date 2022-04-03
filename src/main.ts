@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as bodyParser from 'body-parser';
 import rateLimit from 'express-rate-limit';
-import { TimeoutInterceptor } from './interceptors';
+import { TimeoutInterceptor } from './common/interceptors';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';

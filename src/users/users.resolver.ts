@@ -19,7 +19,7 @@ import { UserPermission } from '../user-permissions/entities/user-permission.ent
 import { PoliciesGuard } from '../casl/policies.guard';
 import { CheckPolicies } from '../casl/check-policies.decorator';
 import { AppAbility } from '../casl/casl-ability.factory';
-import { Action } from '../enums/action.enum';
+import { Action } from '../common/enums/action.enum';
 import { ObjectsKeys } from '../permissions/constants/objects.constant';
 
 @Resolver(() => User)

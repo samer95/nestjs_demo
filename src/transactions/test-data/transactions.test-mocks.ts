@@ -1,10 +1,8 @@
 import { Transaction } from '../entities/transaction.entity';
 import { Repository } from 'typeorm';
 import { TRANSACTIONS_DATA } from './transactions.test-data';
+import { MockType } from '../../common/types/mock.type';
 
-export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<unknown>;
-};
 export const transactionsRepositoryMock: MockType<Repository<Transaction>> = {
   find: jest
     .fn()

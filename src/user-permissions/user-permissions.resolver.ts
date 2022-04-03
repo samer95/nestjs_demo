@@ -6,7 +6,7 @@ import { PoliciesGuard } from '../casl/policies.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CheckPolicies } from '../casl/check-policies.decorator';
 import { AppAbility } from '../casl/casl-ability.factory';
-import { Action } from '../enums/action.enum';
+import { Action } from '../common/enums/action.enum';
 import { Permission } from '../permissions/entities/permission.entity';
 
 @Resolver(() => UserPermission)

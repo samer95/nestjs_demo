@@ -1,4 +1,4 @@
-import { Action } from '../../enums/action.enum';
+import { Action } from '../../common/enums/action.enum';
 
 export const CRUD_PERMISSIONS = {
   m: {

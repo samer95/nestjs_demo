@@ -9,9 +9,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserTypes } from '../../enums/UserTypes';
-import { Genders } from '../../enums/Genders';
-import { Languages } from '../../enums/Languages';
+import { UserType } from '../../common/enums/user-type.enum';
+import { Gender } from '../../common/enums/gender.enum';
+import { Language } from '../../common/enums/language.enum';
 import { Certificate } from '../../certificates/entities/certificate.entity';
 import { UserPermission } from '../../user-permissions/entities/user-permission.entity';
 
@@ -56,13 +56,13 @@ export class User {
 
   @Column({
     type: 'enum',
-    enum: UserTypes,
-    default: UserTypes.STUDENT,
+    enum: UserType,
+    default: UserType.STUDENT,
   })
   @Field()
   user_type: string;
 
-  @Column({ type: 'enum', enum: Genders, nullable: true })
+  @Column({ type: 'enum', enum: Gender, nullable: true })
   @Field({ nullable: true })
   gender?: string;
 
@@ -74,7 +74,7 @@ export class User {
   @Field(type => Int)
   max_facilities_count: number;
 
-  @Column({ type: 'enum', enum: Languages, default: Languages.TR })
+  @Column({ type: 'enum', enum: Language, default: Language.TR })
   @Field()
   lang: string;
 
