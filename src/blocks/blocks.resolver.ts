@@ -78,7 +78,8 @@ export class BlocksResolver {
       await this.cacheManager.set('blocksToFetch', blocksToFetch, { ttl });
     }
 
-    for (const key of Object.keys(blocksToFetch)) {
+    const blocksToFetchKeys = Object.keys(blocksToFetch);
+    for (const key of blocksToFetchKeys) {
       const block = blocksToFetch[key];
       await this.blocksQueue.add('fetchBlock', {
         start: block.start,
@@ -86,7 +87,7 @@ export class BlocksResolver {
       });
     }
 
-    return `*** The job has been started successfully will start from ${start} number ***`;
+    return `*** The job has been started successfully. ${blocksToFetchKeys.length} jobs has been created ***`;
   }
 
   getBlockNumber(): Promise<number> {
