@@ -74,6 +74,8 @@ type Transaction {
   id: Int!
   block_id: Int
   t_hash: String!
+  balance_from: Float
+  balance_to: Float
   created_at: DateTime!
   updated_at: DateTime!
   block: Block
@@ -173,7 +175,13 @@ input LoginUserInput {
 input CreateBlockInput {
   b_hash: String!
   b_number: Int!
-  transactions: [String!]!
+  transactions: [SingleTransaction!]!
+}
+
+input SingleTransaction {
+  hash: String!
+  balance_from: Float!
+  balance_to: Float!
 }
 
 input FetchBlocksInput {

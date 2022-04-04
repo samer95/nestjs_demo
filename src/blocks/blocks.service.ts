@@ -24,11 +24,7 @@ export class BlocksService {
       { excludeExtraneousValues: true },
     );
 
-    // TODO: make sure if the block number is a unique value
-    const existedCount = await this.blocksRepository.count({
-      where: { b_number: blockData.b_number },
-    });
-    if (existedCount > 0) {
+    if (await this.isExists(blockData.b_number)) {
       return null;
     }
 
@@ -39,7 +35,9 @@ export class BlocksService {
     const transactionsData = transactions.map(trans => {
       const newObj = new Transaction();
       newObj.block_id = newBlock.id;
-      newObj.t_hash = trans;
+      newObj.t_hash = trans.hash;
+      newObj.balance_from = trans.balance_from;
+      newObj.balance_to = trans.balance_to;
       return newObj;
     });
 
@@ -48,6 +46,14 @@ export class BlocksService {
     );
 
     return newBlock;
+  }
+
+  async isExists(bNumber): Promise<boolean> {
+    // TODO: make sure if the block number is a unique value
+    const existedCount = await this.blocksRepository.count({
+      where: { b_number: bNumber },
+    });
+    return existedCount > 0;
   }
 
   findAll(): Promise<Block[]> {
