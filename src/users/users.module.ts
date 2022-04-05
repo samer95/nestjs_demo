@@ -7,6 +7,7 @@ import { UsersRepository } from './users.repository';
 import { UserPermissionsRepository } from '../user-permissions/user-permissions.repository';
 import { User } from './entities/user.entity';
 import { CaslModule } from '../casl/casl.module';
+import { EventsModule } from '../events/events.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CaslModule } from '../casl/casl.module';
       UserPermissionsRepository,
       User,
     ]),
+    EventsModule,
     CertificatesModule,
     CaslModule,
   ],

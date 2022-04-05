@@ -1,12 +1,4 @@
-import {
-  Args,
-  Int,
-  Mutation,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
@@ -21,12 +13,19 @@ import { CheckPolicies } from '../casl/check-policies.decorator';
 import { AppAbility } from '../casl/casl-ability.factory';
 import { Action } from '../common/enums/action.enum';
 import { ObjectsKeys } from '../permissions/constants/objects.constant';
+import { EventsGateway } from '../events/events.gateway';
+import { ConnectionMode, Web3Util } from '../common/utils';
+import { ConfigService } from '@nestjs/config';
 
 @Resolver(() => User)
 @UseGuards(PoliciesGuard)
 @UseGuards(JwtAuthGuard)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly eventsGateway: EventsGateway,
+    private readonly configService: ConfigService,
+  ) {}
 
   @CheckPolicies((ability: AppAbility) => ability.can(Action.Create, User))
   @Mutation(() => User)
@@ -85,5 +84,18 @@ export class UsersResolver {
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.remove(id);
+  }
+
+  @Mutation(() => String)
+  async startBlockHeaderSubscription() {
+    const web3Obj = new Web3Util(this.configService, ConnectionMode.WSS);
+    try {
+      await web3Obj.subscribeBlockHeaders(data => {
+        this.eventsGateway.server.emit('events', data);
+      });
+      return 'Subscription has been started successfully.';
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
   }
 }

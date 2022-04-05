@@ -109,6 +109,7 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   updateUserPermissions(updateUserPermissionsInput: UpdateUserPermissionsInput!): [UserPermission!]!
   removeUser(id: Int!): User!
+  startBlockHeaderSubscription: String!
   createCertificate(createCertificateInput: CreateCertificateInput!): Certificate!
   updateCertificate(updateCertificateInput: UpdateCertificateInput!): Certificate!
   removeCertificate(id: Int!): Certificate!

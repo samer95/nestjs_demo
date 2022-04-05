@@ -15,6 +15,7 @@ import { UserPermissionsModule } from './user-permissions/user-permissions.modul
 import { BlocksModule } from './blocks/blocks.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { BullModule } from '@nestjs/bull';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { BullModule } from '@nestjs/bull';
         },
       }),
     }),
+    EventsModule,
     UsersModule,
     AuthModule,
     CertificatesModule,
