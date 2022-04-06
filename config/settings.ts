@@ -14,4 +14,7 @@ export default registerAs('settings', () => ({
     port: process.env.REDIS_PORT || 6379,
     ttl: process.env.REDIS_TTL || 86400, // 60 * 60 * 24 = 1 day
   },
+  socket: {
+    secret: process.env.SOCKET_SECRET || 'socket_secret',
+  },
 }));

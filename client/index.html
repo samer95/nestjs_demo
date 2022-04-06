@@ -2,7 +2,15 @@
   <head>
     <script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
     <script>
-      const socket = io('http://localhost:3000');
+      const socket = io('http://localhost:3000', {
+        transportOptions: {
+          polling: {
+            extraHeaders: {
+              Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJmaXJzdF9uYW1lIjoiU2FtZXIgMiIsImxhc3RfbmFtZSI6IkxhaGxvdWggMiIsImVtYWlsIjoic2FtZXJAZ21haWwuY29tIiwicGhvbmUiOiIrOTA1MzE1OTg0NzcxIiwic29ja2V0X3Rva2VuIjoiODA3Y2VkNjgyN2I0ZmNhMWY5NmRlZTBhN2ZiOWEyNzIiLCJpYXQiOjE2NDkyMDY1NTUsImV4cCI6MTY0OTgxMTM1NX0.9vD7wgSG-7iZw5xkAW0fu1MjBwIfhkOUxb5rEWGehcw"
+            }
+          }
+        }
+      });
       socket.on('connect', function() {
         console.log('Connected');
 

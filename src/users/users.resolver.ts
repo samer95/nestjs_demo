@@ -91,7 +91,7 @@ export class UsersResolver {
     const web3Obj = new Web3Util(this.configService, ConnectionMode.WSS);
     try {
       await web3Obj.subscribeBlockHeaders(data => {
-        this.eventsGateway.server.emit('events', data);
+        this.eventsGateway.to(15).emit('events', data);
       });
       return 'Subscription has been started successfully.';
     } catch (error) {
