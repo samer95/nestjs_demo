@@ -16,7 +16,9 @@ export class WsGuard implements CanActivate {
 
   async canActivate(
     context: any,
-  ): Promise<boolean | any | Promise<boolean | any> | Observable<boolean | any>> {
+  ): Promise<
+    boolean | any | Promise<boolean | any> | Observable<boolean | any>
+  > {
     const { isAuthorized } = await WsGuard.verifyToken(
       context.args[0],
       this.jwtService,

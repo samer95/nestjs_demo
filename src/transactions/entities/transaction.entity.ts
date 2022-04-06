@@ -1,4 +1,10 @@
-import { Field, Float, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
+import {
+  Field,
+  Float,
+  GraphQLISODateTime,
+  Int,
+  ObjectType,
+} from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -29,7 +35,7 @@ export class Transaction {
   balance_from: number;
 
   @Column({ type: 'numeric', precision: 50, scale: 0, nullable: true })
-  @Field(() => Float , { nullable: true })
+  @Field(() => Float, { nullable: true })
   balance_to: number;
 
   @CreateDateColumn({ type: 'timestamp' })
